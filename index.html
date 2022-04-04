@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ts-wordle</title>
+    <style>
+        span {
+            background-color:antiquewhite;
+            width: fit-content; 
+            margin-right: 1vw; 
+            padding: 1vw;
+        }
+
+        input {
+            padding: 1vw;
+            background-color: transparent;
+            width: 1.5vw;
+            font-size: 1.5vw;
+            margin-bottom: 0.4vw;
+            margin-right: 0.2vw;
+        }
+
+        input:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="inputs">
+            <input type="text" id="11" maxlength='1' disabled="true">
+            <input type="text" id="12" maxlength='1' disabled="true">
+            <input type="text" id="13" maxlength='1' disabled="true">
+            <input type="text" id="14" maxlength='1' disabled="true">
+            <input type="text" id="15" maxlength='1' disabled="true">
+        </div>
+        <div class="inputs">
+            <input type="text" id="21" maxlength='1' disabled="true">
+            <input type="text" id="22" maxlength='1' disabled="true">
+            <input type="text" id="23" maxlength='1' disabled="true">
+            <input type="text" id="24" maxlength='1' disabled="true">
+            <input type="text" id="25" maxlength='1' disabled="true">
+        </div>
+        <div class="inputs">
+            <input type="text" id="31" maxlength='1' disabled="true">
+            <input type="text" id="32" maxlength='1' disabled="true">
+            <input type="text" id="33" maxlength='1' disabled="true">
+            <input type="text" id="34" maxlength='1' disabled="true">
+            <input type="text" id="35" maxlength='1' disabled="true">
+        </div>
+        <div class="inputs">
+            <input type="text" id="41" maxlength='1' disabled="true">
+            <input type="text" id="42" maxlength='1' disabled="true">
+            <input type="text" id="43" maxlength='1' disabled="true">
+            <input type="text" id="44" maxlength='1' disabled="true">
+            <input type="text" id="45" maxlength='1' disabled="true">
+        </div>
+        <div class="inputs">
+            <input type="text" id="51" maxlength='1' disabled="true">
+            <input type="text" id="52" maxlength='1' disabled="true">
+            <input type="text" id="53" maxlength='1' disabled="true">
+            <input type="text" id="54" maxlength='1' disabled="true">
+            <input type="text" id="55" maxlength='1' disabled="true">
+        </div>
+    </div>
+    <br><br><br>
+    <div class="keypad" id="keypad"></div>
+
+    <script>
+        let correctWord = 'party';
+        let keypad = document.getElementById('keypad');
+        let alphabets = [
+            'A', 'B', 'C', 'D', 'E', 'F',
+            'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M',
+            'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+            'W', 'X', 'Y', 'Z'
+        ]
+        let qwerty = [
+            ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+            ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+            ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+        ]
+        qwerty.forEach(r => {
+            r.forEach(l => {
+                keypad.innerHTML += `<span id=${l}>${l}</span>`
+            })
+            keypad.innerHTML += '<br><br><br>'
+        })
+        let currentInput = 1;
+        let attempt = 1;
+        let currentInputId = attempt.toString() + currentInput.toString();
+        const updateCurrentId = () => {
+            currentInputId = attempt.toString() + currentInput.toString();
+        }
+        let status = "playing";
+
+        document.getElementById(currentInputId).focus();
+        document.getElementById(currentInputId).disabled = false;
+        window.addEventListener('keydown', (e) => {
+            if (alphabets.includes(e.key.toUpperCase()) && status === "playing") {
+                let input = document.getElementById(currentInputId);
+                input.value = e.key.toUpperCase()
+                if (currentInput != 5) {
+                    input.disabled = true
+                    currentInput++
+                    updateCurrentId()
+                    document.getElementById(currentInputId).disabled = false
+                    setTimeout(() => {
+                        document.getElementById(currentInputId).focus()
+                    }, 100)
+                }
+            } else if (e.keyCode == 8 && status === "playing") { // for backspace
+                e.preventDefault()
+                let input = document.getElementById(currentInputId);
+                if (currentInput != 1 && input.value == '') {
+                    input.disabled = true
+                    currentInput--
+                    updateCurrentId()
+                    document.getElementById(currentInputId).disabled = false
+                    document.getElementById(currentInputId).value = ''
+                    setTimeout(() => {
+                        document.getElementById(currentInputId).focus()
+                    }, 100)
+                } else {
+                    input.value = ''
+                }
+            } else if (e.keyCode == 13) { // on enter key
+                if (currentInput == 5 && status == "playing" && document.getElementById(currentInputId).value != '') {
+                    // currentinput is 5
+                    // check if the input is correct
+                    let input1 = document.getElementById(attempt.toString() + '1')
+                    let input2 = document.getElementById(attempt.toString() + '2')
+                    let input3 = document.getElementById(attempt.toString() + '3')
+                    let input4 = document.getElementById(attempt.toString() + '4')
+                    let input5 = document.getElementById(attempt.toString() + '5')
+                    let word = input1.value + input2.value + input3.value + input4.value + input5.value
+                    setTimeout(() => {
+                        // check correctWord
+                        if (word == correctWord.toUpperCase()) {
+                            [1,2,3,4,5].forEach(i => {
+                                let input = document.getElementById(attempt.toString() + i.toString())
+                                input.disabled = true
+                                document.getElementById(input.value).style.backgroundColor = 'lightgreen'
+                                input.style.backgroundColor = 'lightgreen'
+                            })
+                            status = "w"
+                            setTimeout(() => {
+                                alert('GAME OVER. YOU WON')
+                            }, 100)
+                        }
+                        if (status != "w") {
+                            // check letters of correctWord
+                            [1,2,3,4,5].forEach(i => {
+                                let input = document.getElementById(attempt.toString() + i.toString())
+                                console.log(input.value);
+                                if (input.value == correctWord[i-1].toUpperCase()) {
+                                    document.getElementById(input.value).style.backgroundColor = 'lightgreen'
+                                    input.style.backgroundColor = 'lightgreen'
+                                } else {
+                                    if (correctWord.toUpperCase().split("").includes(input.value)) {
+                                        document.getElementById(input.value).style.backgroundColor = 'yellow'
+                                        input.style.backgroundColor = 'yellow'
+                                    } else {
+                                        document.getElementById(input.value).style.backgroundColor = 'red'
+                                        input.style.backgroundColor = 'red'
+                                    }
+                                }
+                            })
+                            document.getElementById(currentInputId).disabled = true
+                            if (attempt == 5) {
+                                status = "l"
+                                setTimeout(() => {
+                                    alert('GAME OVER. YOU LOST')
+                                }, 100)
+                            } else {
+                                attempt++
+                                currentInput = 1
+                                updateCurrentId()
+                                document.getElementById(currentInputId).disabled = false
+                                setTimeout(() => {
+                                    document.getElementById(currentInputId).focus()
+                                }, 100)
+                            }
+                        }
+                    }, 100)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
