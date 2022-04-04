@@ -1,4 +1,4 @@
-words = ['their', 'about', 'would', 'other', 'words', 'could', 'write', 'first', 'water', 'after', 'right', 'think', 'years', 'place', 'sound', 'great', 'found', 'those', 'under', 'might', 'while', 'house', 'world', 'below', 'asked', 'large', 'until', 'along', 'being', 'often', 'earth', 'began', 'since', 'study', 'night', 'light', 'above', 'parts', 'young', 'story', 'point', 'times', 'heard', 'whole', 'white', 'given', 'means', 'music', 'miles', 'thing', 'today', 'later', 'using', 'money', 'lines', 'group', 'among', 'learn', 'space', 'table', 'early', 'short', 'hands', 'black', 'shown', 'front', 'voice', 'kinds', 'makes', 'comes', 'close', 'power', 'lived', 'vowel', 'taken', 'built', 'heart', 'ready', 'quite', 'bring', 'round', 'horse', 'stand', 'birds', 'tried', 'least', 'field', 'whose', 'girls', 'third', 'hours', 'moved', 'plant', 'doing', 'names', 'forms', 'heavy', 'ideas', 'cried', 'begin']
+var words = ['their', 'about', 'would', 'other', 'words', 'could', 'write', 'first', 'water', 'after', 'right', 'think', 'years', 'place', 'sound', 'great', 'found', 'those', 'under', 'might', 'while', 'house', 'world', 'below', 'asked', 'large', 'until', 'along', 'being', 'often', 'earth', 'began', 'since', 'study', 'night', 'light', 'above', 'parts', 'young', 'story', 'point', 'times', 'heard', 'whole', 'white', 'given', 'means', 'music', 'miles', 'thing', 'today', 'later', 'using', 'money', 'lines', 'group', 'among', 'learn', 'space', 'table', 'early', 'short', 'hands', 'black', 'shown', 'front', 'voice', 'kinds', 'makes', 'comes', 'close', 'power', 'lived', 'vowel', 'taken', 'built', 'heart', 'ready', 'quite', 'bring', 'round', 'horse', 'stand', 'birds', 'tried', 'least', 'field', 'whose', 'girls', 'third', 'hours', 'moved', 'plant', 'doing', 'names', 'forms', 'heavy', 'ideas', 'cried', 'begin']
 
 var usedWords = []
 if(localStorage.getItem('usedWords') != null){
@@ -17,7 +17,10 @@ if(words.length == 1){
 var random = Math.floor(Math.random() * (words.length - 0) + 0);
 usedWords.push(words[random]);
 var correctWord = words[random];
-words.pop(random);
+const index = words.indexOf(words[random]);
+if (index > -1) {
+  words.splice(index, 1);
+}
 
 localStorage.setItem('words', JSON.stringify(words));
 localStorage.setItem('usedWords', JSON.stringify(usedWords))
@@ -89,6 +92,12 @@ window.addEventListener('keydown', (e) => {
             let input5 = document.getElementById(attempt.toString() + '5')
             let word = input1.value + input2.value + input3.value + input4.value + input5.value
             setTimeout(() => {
+                if(words.includes(word.toLowerCase()) == false && usedWords.includes(word.toLowerCase()) == false){
+                    setTimeout(() => {
+                        alert('Word not in list. Please try again.')
+                    }, 100)
+                    return
+                }
                 // check correctWord
                 if (word == correctWord.toUpperCase()) {
                     [1,2,3,4,5].forEach(i => {
@@ -126,6 +135,7 @@ window.addEventListener('keydown', (e) => {
                         status = "l"
                         setTimeout(() => {
                             alert('GAME OVER. YOU LOST')
+                            window.location.reload()
                         }, 100)
                     } else {
                         attempt++
