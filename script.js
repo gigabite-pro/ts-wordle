@@ -94,7 +94,19 @@ window.addEventListener('keydown', (e) => {
             setTimeout(() => {
                 if(words.includes(word.toLowerCase()) == false && usedWords.includes(word.toLowerCase()) == false){
                     setTimeout(() => {
-                        alert('Word not in list. Please try again.')
+                        Toastify({
+                            text: "Word not in list",
+                            duration: 3000,
+                            destination: "https://github.com/apvarun/toastify-js",
+                            newWindow: true,
+                            close: false,
+                            gravity: "top", // `top` or `bottom`
+                            position: "center", // `left`, `center` or `right`
+                            stopOnFocus: false, // Prevents dismissing of toast on hover
+                            style: {
+                              background: "#b59f3b",
+                            }
+                          }).showToast();
                     }, 100)
                     return
                 }
@@ -107,10 +119,19 @@ window.addEventListener('keydown', (e) => {
                         input.style.backgroundColor = 'rgb(22, 225, 110)'
                     })
                     gameStatus = "w"
-                    setTimeout(() => {
-                        alert('GAME OVER. YOU WON')
-                        window.location.reload()
-                    }, 100)
+                    Toastify({
+                        text: "You won",
+                        duration: 3000,
+                        destination: "https://github.com/apvarun/toastify-js",
+                        newWindow: true,
+                        close: false,
+                        gravity: "top", // `top` or `bottom`
+                        position: "center", // `left`, `center` or `right`
+                        stopOnFocus: false, // Prevents dismissing of toast on hover
+                        style: {
+                          background: "rgb(22, 225, 110)",
+                        }
+                      }).showToast();
                 }
                 if (gameStatus != "w") {
                     // check letters of correctWord
@@ -133,10 +154,19 @@ window.addEventListener('keydown', (e) => {
                     document.getElementById(currentInputId).disabled = true
                     if (attempt == 5) {
                         gameStatus = "l"
-                        setTimeout(() => {
-                            alert(`GAME OVER. YOU LOST. The correct word was ${correctWord.toUpperCase()}`)
-                            window.location.reload()
-                        }, 100)
+                        Toastify({
+                            text: `Oops! You lost. The word was ${correctWord.toUpperCase()}`,
+                            duration: 3000,
+                            destination: "https://github.com/apvarun/toastify-js",
+                            newWindow: true,
+                            close: false,
+                            gravity: "top", // `top` or `bottom`
+                            position: "center", // `left`, `center` or `right`
+                            stopOnFocus: false, // Prevents dismissing of toast on hover
+                            style: {
+                              background: "#E61C34",
+                            }
+                          }).showToast();
                     } else {
                         attempt++
                         currentInput = 1
