@@ -4,69 +4,55 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>ts-wordle</title>
-    <style>
-        span {
-            background-color:antiquewhite;
-            width: fit-content; 
-            margin-right: 1vw; 
-            padding: 1vw;
-        }
-
-        input {
-            padding: 1vw;
-            background-color: transparent;
-            width: 1.5vw;
-            font-size: 1.5vw;
-            margin-bottom: 0.4vw;
-            margin-right: 0.2vw;
-        }
-
-        input:focus {
-            outline: none;
-        }
-    </style>
 </head>
 <body>
-    <div class="grid">
-        <div class="inputs">
-            <input type="text" id="11" maxlength='1' disabled="true">
-            <input type="text" id="12" maxlength='1' disabled="true">
-            <input type="text" id="13" maxlength='1' disabled="true">
-            <input type="text" id="14" maxlength='1' disabled="true">
-            <input type="text" id="15" maxlength='1' disabled="true">
-        </div>
-        <div class="inputs">
-            <input type="text" id="21" maxlength='1' disabled="true">
-            <input type="text" id="22" maxlength='1' disabled="true">
-            <input type="text" id="23" maxlength='1' disabled="true">
-            <input type="text" id="24" maxlength='1' disabled="true">
-            <input type="text" id="25" maxlength='1' disabled="true">
-        </div>
-        <div class="inputs">
-            <input type="text" id="31" maxlength='1' disabled="true">
-            <input type="text" id="32" maxlength='1' disabled="true">
-            <input type="text" id="33" maxlength='1' disabled="true">
-            <input type="text" id="34" maxlength='1' disabled="true">
-            <input type="text" id="35" maxlength='1' disabled="true">
-        </div>
-        <div class="inputs">
-            <input type="text" id="41" maxlength='1' disabled="true">
-            <input type="text" id="42" maxlength='1' disabled="true">
-            <input type="text" id="43" maxlength='1' disabled="true">
-            <input type="text" id="44" maxlength='1' disabled="true">
-            <input type="text" id="45" maxlength='1' disabled="true">
-        </div>
-        <div class="inputs">
-            <input type="text" id="51" maxlength='1' disabled="true">
-            <input type="text" id="52" maxlength='1' disabled="true">
-            <input type="text" id="53" maxlength='1' disabled="true">
-            <input type="text" id="54" maxlength='1' disabled="true">
-            <input type="text" id="55" maxlength='1' disabled="true">
+    <div class="head">
+        TS-WORDLE
+    </div>
+    <div class="centered">
+        <div class="grid">
+            <div class="inputs">
+                <input type="text" id="11" maxlength='1' disabled="true">
+                <input type="text" id="12" maxlength='1' disabled="true">
+                <input type="text" id="13" maxlength='1' disabled="true">
+                <input type="text" id="14" maxlength='1' disabled="true">
+                <input type="text" id="15" maxlength='1' disabled="true">
+            </div>
+            <div class="inputs">
+                <input type="text" id="21" maxlength='1' disabled="true">
+                <input type="text" id="22" maxlength='1' disabled="true">
+                <input type="text" id="23" maxlength='1' disabled="true">
+                <input type="text" id="24" maxlength='1' disabled="true">
+                <input type="text" id="25" maxlength='1' disabled="true">
+            </div>
+            <div class="inputs">
+                <input type="text" id="31" maxlength='1' disabled="true">
+                <input type="text" id="32" maxlength='1' disabled="true">
+                <input type="text" id="33" maxlength='1' disabled="true">
+                <input type="text" id="34" maxlength='1' disabled="true">
+                <input type="text" id="35" maxlength='1' disabled="true">
+            </div>
+            <div class="inputs">
+                <input type="text" id="41" maxlength='1' disabled="true">
+                <input type="text" id="42" maxlength='1' disabled="true">
+                <input type="text" id="43" maxlength='1' disabled="true">
+                <input type="text" id="44" maxlength='1' disabled="true">
+                <input type="text" id="45" maxlength='1' disabled="true">
+            </div>
+            <div class="inputs">
+                <input type="text" id="51" maxlength='1' disabled="true">
+                <input type="text" id="52" maxlength='1' disabled="true">
+                <input type="text" id="53" maxlength='1' disabled="true">
+                <input type="text" id="54" maxlength='1' disabled="true">
+                <input type="text" id="55" maxlength='1' disabled="true">
+            </div>
         </div>
     </div>
-    <br><br><br>
-    <div class="keypad" id="keypad"></div>
+    <div class="bottom">
+        <div class="keypad" id="keypad"></div>
+    </div>
 
     <script>
         let correctWord = 'party';
@@ -84,9 +70,9 @@
         ]
         qwerty.forEach(r => {
             r.forEach(l => {
-                keypad.innerHTML += `<span id=${l}>${l}</span>`
+                keypad.innerHTML += `<span id=${l} style="display: inline-block; width: 2vw;">${l}</span>`
             })
-            keypad.innerHTML += '<br><br><br>'
+            keypad.innerHTML += '<br><br>'
         })
         let currentInput = 1;
         let attempt = 1;
@@ -156,15 +142,15 @@
                                 let input = document.getElementById(attempt.toString() + i.toString())
                                 console.log(input.value);
                                 if (input.value == correctWord[i-1].toUpperCase()) {
-                                    document.getElementById(input.value).style.backgroundColor = 'lightgreen'
-                                    input.style.backgroundColor = 'lightgreen'
+                                    document.getElementById(input.value).style.backgroundColor = '#16e16e'
+                                    input.style.backgroundColor = '#16e16e'
                                 } else {
                                     if (correctWord.toUpperCase().split("").includes(input.value)) {
-                                        document.getElementById(input.value).style.backgroundColor = 'yellow'
-                                        input.style.backgroundColor = 'yellow'
+                                        document.getElementById(input.value).style.backgroundColor = '#b59f3b'
+                                        input.style.backgroundColor = '#b59f3b'
                                     } else {
-                                        document.getElementById(input.value).style.backgroundColor = 'red'
-                                        input.style.backgroundColor = 'red'
+                                        document.getElementById(input.value).style.backgroundColor = '#3a3a3c'
+                                        input.style.backgroundColor = '#3a3a3c'
                                     }
                                 }
                             })
