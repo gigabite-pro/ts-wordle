@@ -45,9 +45,11 @@ qwerty.forEach(r => {
 })
 
 window.onload = () => {
-    keys = document.getElementById('keypad').getElementsByTagName('span');
-    for (let i = 0; i < keys.length; i++) {
-        keys[i].style.width = '6.5vw';   
+    if(window.innerWidth < 600){
+        keys = document.getElementById('keypad').getElementsByTagName('span');
+        for (let i = 0; i < keys.length; i++) {
+            keys[i].style.width = '6.5vw';   
+        }
     }
 }
 
