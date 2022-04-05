@@ -43,6 +43,14 @@ qwerty.forEach(r => {
     })
     keypad.innerHTML += '<br><br>'
 })
+
+window.onload = () => {
+    keys = document.getElementById('keypad').getElementsByTagName('span');
+    for (let i = 0; i < keys.length; i++) {
+        keys[i].style.width = '6.5vw';   
+    }
+}
+
 let currentInput = 1;
 let attempt = 1;
 let currentInputId = attempt.toString() + currentInput.toString();

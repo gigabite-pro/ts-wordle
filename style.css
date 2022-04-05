@@ -85,3 +85,27 @@ span{
     padding: 1vw;
     margin-right: 0.5vw;
 }
+
+@media only screen and (max-width: 600px){
+    .head{
+        font-size: 11vw;
+    }
+    .inputs > input{
+        width: 14vw;
+        height: 14vw;
+        font-size: 9vw;
+        margin-right: 0.5vw;
+    }
+    .inputs{
+        margin-top: 1vw;
+    }
+    .bottom{
+        margin-top: 5px;
+    }
+    span{
+        height: 10vw;
+        font-size: 6vw;
+        padding-top: 3vw;
+        margin-right: 1vw;
+    }
+}
